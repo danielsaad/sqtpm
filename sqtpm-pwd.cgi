@@ -53,8 +53,8 @@ sub setpasswd {
   my ($utype,$upassf) = authenticate($uid,$oldplain);
 
   ($utype eq '') and abort_pwd($uid,'Dados incorretos.');
-  ($newplain eq '') and abort_pwd($uid,'A nova senha n„o pode ser vazia.');
-  ($newplain ne $replain) and abort_pwd($uid,'A nova senha e a confirmaÁ„o devem ser iguais.');
+  ($newplain eq '') and abort_pwd($uid,'A nova senha n√£o pode ser vazia.');
+  ($newplain ne $replain) and abort_pwd($uid,'A nova senha e a confirma√ß√£o devem ser iguais.');
 
   # Update the password file:
   $newenc = sha512_base64($newplain);
@@ -131,20 +131,20 @@ sub passwd_form {
 </script>
 <form name="pass" action="sqtpm-pwd.cgi" method="POST" enctype="multipart/form-data">
 <table cellspacing=5 border=0>
-<tr><td>usu·rio:<td>
+<tr><td>usu√°rio:<td>
 <input onkeypress="enterh(event,'u')" type="text" name="uid" size="10" maxlength="20">
 <tr><td>senha atual:<td>
 <input onkeypress="enterh(event,'o')" type="password" name="oldpwd" size="10" maxlength="20">
 <tr><td>senha nova:<td>
 <input onkeypress="enterh(event,'n')" type="password" name="newpwd" size="10" maxlength="20">
-<tr><td>confirmaÁ„o:<td>
+<tr><td>confirma√ß√£o:<td>
 <input onkeypress="enterh(event,'c')" type="password" name="repwd" size="10" maxlength="20">
 </table>
 <input type="hidden" name="setpwd" value=0>
 <hr>
 <a href="javascript:setpwd()">enviar</a> &nbsp; &#8226; &nbsp; 
 <a href="sqtpm.cgi">sqtpm</a>
-<noscript><p>Seu browser n„o tem javascript.  Boa sorte na prÛxima!</noscript>
+<noscript><p>Seu browser n√£o tem javascript.  Boa sorte na pr√≥xima!</noscript>
 </form>
 <script type="text/javascript">document.pass.uid.focus();</script>
 </div>

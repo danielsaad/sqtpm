@@ -100,7 +100,7 @@ if (!defined($sid)) {
 }
 else {
   $session = new CGI::Session("driver:File",$sid,{Directory=>$sessiond}) ||
-    abort_login('',"Erro ao recuperar a sess„o : $!");
+    abort_login('',"Erro ao recuperar a sess√£o : $!");
   
   if (!$session->param('uid')) {
     $session->delete();
@@ -159,7 +159,7 @@ sub offline {
 			    meta({-name=>'robots',-content=>'noindex'}),
 			    meta({-name=>'googlebot',-content=>'noindex'})]);
 
-  print '<div class="f85"><h1>sqtpm</h1>O sqtpm est· indisponÌvel no momento.<hr></div>';
+  print '<div class="f85"><h1>sqtpm</h1>O sqtpm est√° indispon√≠vel no momento.<hr></div>';
 
   print end_html();
 }
@@ -183,7 +183,7 @@ sub login_form {
 <h1>sqtpm</h1>
 <form method="post" action="sqtpm.cgi" enctype="multipart/form-data" name="sqtpm">
 <table cellspacing="5" border="0">
-<tr><td>usu·rio:</td><td>
+<tr><td>usu√°rio:</td><td>
 <input onkeypress="enterh(event,'u')" type="text" name="uid" size="10" maxlength="20">
 </td></tr>
 <tr><td>senha:</td><td>
@@ -198,7 +198,7 @@ sub login_form {
 <a href="javascript:;" onclick="login()">entrar</a> &nbsp; &#8226; &nbsp; 
 <a href="sqtpm-pwd.cgi">senhas</a> &nbsp; &#8226; &nbsp; 
 <a href="javascript:;" onclick="wrap('about','','','')">bula</a>
-<noscript><p>Seu browser n„o tem javascript.  Boa sorte na prÛxima!</noscript>
+<noscript><p>Seu browser n√£o tem javascript.  Boa sorte na pr√≥xima!</noscript>
 </form>
 <script type="text/javascript">document.sqtpm.uid.focus();</script>
 </div>
@@ -243,7 +243,7 @@ sub home {
     $tab .= '<th>Estado</th>';
     ($utype ne 'aluno') and ($tab .= '<th>Abertura</th>');    
     $tab .= '<th>Data limite</th>';
-    ($utype ne 'prof') and ($tab .= '<th>⁄ltimo envio</th></tr>');
+    ($utype ne 'prof') and ($tab .= '<th>√öltimo envio</th></tr>');
     ($utype eq 'prof') and ($tab .= '<th>Moss</th></tr>');
     
     # Assignments table rows:
@@ -333,13 +333,13 @@ sub home {
       if ($utype ne 'aluno') {
 	$tab .= '<td>';
 	$tab .= (exists($cfg{startup}) ?
-		 dow($cfg{startup}) . " &nbsp;" . br_date($cfg{startup}) : 'n„o h·') . '</td>';
+		 dow($cfg{startup}) . " &nbsp;" . br_date($cfg{startup}) : 'n√£o h√°') . '</td>';
       }
       
       # Deadline:
       $tab .= '<td>';
       $tab .= (exists($cfg{deadline}) ?
-	       dow($cfg{deadline}) . "&nbsp;" . br_date($cfg{deadline}) : 'n„o h·')  . '</td>';
+	       dow($cfg{deadline}) . "&nbsp;" . br_date($cfg{deadline}) : 'n√£o h√°')  . '</td>';
       
       if ($utype ne 'prof') {
 	# Last submisson grade:
@@ -351,7 +351,7 @@ sub home {
 	    "onclick=\"wrap('rep','$assign[$i]','$uid');\">$rep{grade}</a>";
 	}
 	else {
-	  $tab .= '<td class="grid">n„o houve';
+	  $tab .= '<td class="grid">n√£o houve';
 	}
 	$tab .= '</td>';
       }
@@ -385,7 +385,7 @@ sub home {
     $tab .= '</table>';
 
     if (@assign == 0) {
-      $tab = "<p>N„o h· trabalhos para $uid.</p>";
+      $tab = "<p>N√£o h√° trabalhos para $uid.</p>";
     }
     
     # Links for grade tables:
@@ -429,7 +429,7 @@ sub show_subm_report {
   passf_in_assign($uid,$upassf,$assign);
 
   if ($utype eq 'aluno') {
-    ($uid ne $suid) and block_user($uid,$upassf,"show_report : aluno $uid n„o pode ver $suid.");
+    ($uid ne $suid) and block_user($uid,$upassf,"show_report : aluno $uid n√£o pode ver $suid.");
   }
   else {
     # * and @ users may see reports of other users:
@@ -440,7 +440,7 @@ sub show_subm_report {
   my $reportf = "$userd/$uid.rep";
 
   (!-e $reportf) and 
-    block_user($uid,$upassf,"show_report : n„o existe arquivo $reportf.");
+    block_user($uid,$upassf,"show_report : n√£o existe arquivo $reportf.");
 
   if ($utype eq 'aluno') {
     my %ast  = %{ $session->param('assign_states') };
@@ -504,7 +504,7 @@ sub show_statement {
 
   # If the assignment is not open yet and the user is a student, this is strange:
   ($utype eq 'aluno' && $ast{$assign} == 0) and
-    block_user($uid,$upassf,"show_st : o prazo para enviar $assign n„o comeÁou");
+    block_user($uid,$upassf,"show_st : o prazo para enviar $assign n√£o come√ßou");
 
   # Octave, Fortran and Pascal are limited to a single source file:
   if ($cfg{languages} eq 'Octave' || $cfg{languages} eq 'Fortran' || $cfg{languages} eq 'Pascal') {
@@ -533,7 +533,7 @@ sub show_statement {
     }
     elsif ($ast{$assign} == 3 || $ast{$assign} == 7) {
       print '<br><font color="Teal">dry-run: ', 
-	'ainda È possÌvel enviar mas sem substituir o ˙ltimo envio no prazo.</font>';
+	'ainda √© poss√≠vel enviar mas sem substituir o √∫ltimo envio no prazo.</font>';
       $cfg{tries} += 10;
     }
     elsif ($ast{$assign} == 4) {
@@ -545,7 +545,7 @@ sub show_statement {
     $p = 1;
   }
 
-  print $p ? '<br>' : '<p>', "N˙mero m·ximo de envios: ", $cfg{tries};
+  print $p ? '<br>' : '<p>', "N√∫mero m√°ximo de envios: ", $cfg{tries};
   
   my $tryed = 0;
   my $tryed_at = undef;
@@ -565,10 +565,10 @@ sub show_statement {
     $tryed = $rep{tries};
   }
   
-  print "<p>N˙mero de envios de $uid: $tryed";
+  print "<p>N√∫mero de envios de $uid: $tryed";
   
   if (defined $tryed_at) {
-      print '<br>⁄ltimo envio:</b> ',
+      print '<br>√öltimo envio:</b> ',
 	'<a href="javascript:;" ', "onclick=\"wrap('rep','$assign','$uid');\">",
 	br_date($tryed_at),
 	($ast{$assign} < 5 && $tryed_grade ne 'recebido') ? " ($tryed_grade)" : '',
@@ -591,7 +591,7 @@ sub show_statement {
       (@sf > $nf[1]) and ($nf[1] = scalar @sf);
     }
     
-    print '<p>N˙mero de arquivos a enviar: ',
+    print '<p>N√∫mero de arquivos a enviar: ',
       $nf[0] == $nf[1] ? "$nf[0]" : "entre $nf[0] e $nf[1]";
     
     (@sf) and print "<br>Nomes dos arquivos a enviar: @sf<br>";
@@ -667,7 +667,7 @@ sub show_statement {
       print '<hr>';
     }
     else {
-      abort($uid,$assign,"description em config de $assign n„o È http nem arquivo.");
+      abort($uid,$assign,"description em config de $assign n√£o √© http nem arquivo.");
     }
   }
   else {
@@ -735,8 +735,8 @@ sub download_file {
     
     # Students may not dig around:
     if ($utype eq 'aluno') {
-      ($uid ne $suid) and block_user($uid,$upassf,"download_file : $uid n„o pode acessar $file.");
-      (!-f $file) and block_user($uid,$upassf,"download_file : $assign/$uid/$file n„o existe.");
+      ($uid ne $suid) and block_user($uid,$upassf,"download_file : $uid n√£o pode acessar $file.");
+      (!-f $file) and block_user($uid,$upassf,"download_file : $assign/$uid/$file n√£o existe.");
     }
   }
     
@@ -766,7 +766,7 @@ sub show_grades_table {
   print_html_start();
 
   # Check user type and whether he is in the assignment:
-  ($utype eq 'aluno') and block_user($uid,$upassf,"grades_table: $uid n„o È prof ou monitor.");
+  ($utype eq 'aluno') and block_user($uid,$upassf,"grades_table: $uid n√£o √© prof ou monitor.");
   passf_in_assign($uid,$upassf,$assign);
   
   my $tabfile = "$assign/$passf";
@@ -796,7 +796,7 @@ sub show_grades_table {
     my $grp = $passf =~ s/.pass$//r;
     
     if (@users == 0) {
-      $tab = '<p><b>N„o h· usu·rios em $grp.</p>';
+      $tab = '<p><b>N√£o h√° usu√°rios em $grp.</p>';
     }
     else {
       (!%sys_cfg) and (%sys_cfg = load_keys_values('sqtpm.cfg'));
@@ -813,7 +813,7 @@ sub show_grades_table {
       my $show = 0;
       my $show100 = 0;
 
-      $tab = "<b>Acertos para os $n usu·rios de $grp em " .
+      $tab = "<b>Acertos para os $n usu√°rios de $grp em " .
 	"<a href=\"javascript:;\" onclick=\"wrap('stm','$assign');\">$assign</a>:</b>";
 	
       for my $user (@users) {
@@ -849,7 +849,7 @@ sub show_grades_table {
       $tab .= '</ul><p><table border=0>' .
 	'<tr><td valign="top">' .
 	'<table class="sgrid">' .
-	'<tr><th>usu·rio</th><th>acertos</th></tr>';
+	'<tr><th>usu√°rio</th><th>acertos</th></tr>';
 
       if ($sort_tables) {
 	@users = sort(@users);
@@ -864,7 +864,7 @@ sub show_grades_table {
 	if ($break_tables && $d == 28 && $c < @users) {
 	  $tab .= '</table></td>' .
 	    '<td valign="top"><table class="sgrid">' .
-	    '<tr><th>usu·rio</th><th>acertos</th></tr>';
+	    '<tr><th>usu√°rio</th><th>acertos</th></tr>';
 	  $d = 0;
 	}
       }
@@ -969,7 +969,7 @@ sub show_grades_table {
 	  $tab .= '</td></tr><tr><td style="border:0;padding: 0px 0px 0px 20px">' .
 	    '<br><img src="data:image/png;base64,' .
 	    encode_base64(histogram($size<30 ? 500 : $size*25,360,\%frequniq,\%freq100uniq)) .
-	    '"><br>Usu·rios que enviaram e que enviaram com 100% (verde) por dia, incluindo dry-run.</td></tr></table></td>';
+	    '"><br>Usu√°rios que enviaram e que enviaram com 100% (verde) por dia, incluindo dry-run.</td></tr></table></td>';
 	}
       }
       $tab .= '</tr></table>';
@@ -977,12 +977,12 @@ sub show_grades_table {
 
     if (@langs > 1) {
       # Produce the report with a table with tuples {user,grade} for each language:  
-      $tab .= "<p>&nbsp;</p><b>Acertos para $grp em $assign por linguagem de programaÁ„o:</b>" .
+      $tab .= "<p>&nbsp;</p><b>Acertos para $grp em $assign por linguagem de programa√ß√£o:</b>" .
 	'<p><table border=0><tr>';
 
       for my $k (@langs) {
 	$tab .= '<td valign="top"><table class="sgrid">' . 
-	  "<tr><th>usu·rio</th><th>$k</th></tr>";
+	  "<tr><th>usu√°rio</th><th>$k</th></tr>";
 
 	my $show = 0;
 	my $show100 = 0;
@@ -1027,7 +1027,7 @@ sub show_all_grades_table {
   print_html_start();
   
   # Check user type:
-  ($utype ne 'prof') and block_user($uid,$upassf,"all_grades: $uid n„o È prof.");
+  ($utype ne 'prof') and block_user($uid,$upassf,"all_grades: $uid n√£o √© prof.");
 
   # Get a list of assignments for the user:
   opendir(my $DIR,'.') or abort($uid,'','all_grades : opendir root : $!');
@@ -1035,7 +1035,7 @@ sub show_all_grades_table {
   close($DIR);
   
   if (@amnts == 0) {
-    print "N„o h· trabalhos para $passf.";
+    print "N√£o h√° trabalhos para $passf.";
     print_html_end();
   }
 
@@ -1084,7 +1084,7 @@ sub show_all_grades_table {
   }
 
   # Print a table with tuples {user,grade,grade,...} and summaries:
-  print "<b>Acertos para $n usu·rios em $passf:</b></p>";
+  print "<b>Acertos para $n usu√°rios em $passf:</b></p>";
 
   print '<table class="sgrid"><tr><td><b>enviados</b></td>';
   
@@ -1100,7 +1100,7 @@ sub show_all_grades_table {
   }
   print '</tr>';
 
-  print '<tr><th>usu·rio</th>';
+  print '<tr><th>usu√°rio</th>';
   for my $amnt (@amnts) {
     #print "<th><a href=\"javascript:;\" onclick=\"wrap('stm','$amnt');\">$amnt</a></th>";
     print "<th>$amnt</th>";
@@ -1179,7 +1179,7 @@ sub submit_assignment {
       }
       
       if (exists($cfg{startup}) && elapsed_days($cfg{startup}) < 0) {
-	block_user($uid,$upassf,"submit : o prazo para enviar $assign n„o comeÁou.");
+	block_user($uid,$upassf,"submit : o prazo para enviar $assign n√£o come√ßou.");
       }
     }
   }
@@ -1188,10 +1188,10 @@ sub submit_assignment {
 	       'Python3'=>0,'Java'=>0,'Octave'=>0);
   
   (exists($langs{$language})) or
-    block_user($uid,$upassf,"submit : n„o h· linguagem $language.");
+    block_user($uid,$upassf,"submit : n√£o h√° linguagem $language.");
 
   if ($utype ne 'prof' and ! grep(/$language/,split(/\s+/,$cfg{languages}))) {
-    block_user($uid,$upassf,"submit : $assign n„o pode ser enviado em $language.");
+    block_user($uid,$upassf,"submit : $assign n√£o pode ser enviado em $language.");
   }
   
   # Check the number of uploading files and their names: 
@@ -1261,9 +1261,9 @@ sub submit_assignment {
   }
 
   if ($mess) {
-    print $mess, 'Veja detalhes sobre os nomes de arquivos v·lidos nesta ',
-	  "<a href=\"javascript:;\" onclick=\"wrap('hlp','envio')\">p·gina</a>.";
-    abort($uid,$assign,"N˙mero ou nomes de arquivos incorretos",1);
+    print $mess, 'Veja detalhes sobre os nomes de arquivos v√°lidos nesta ',
+	  "<a href=\"javascript:;\" onclick=\"wrap('hlp','envio')\">p√°gina</a>.";
+    abort($uid,$assign,"N√∫mero ou nomes de arquivos incorretos",1);
   }
   
   # Get the number of previous submissions from an existing dry-run or report file:
@@ -1290,7 +1290,7 @@ sub submit_assignment {
   # Check the maximum number of submissions:
   ($dryrun) and ($cfg{tries} += 10);
   ($utype eq 'aluno' && $tryed >= $cfg{tries}) and 
-    abort($uid,$assign,"VocÍ n„o pode enviar $assign mais uma vez.");
+    abort($uid,$assign,"Voc√™ n√£o pode enviar $assign mais uma vez.");
 
 
   ### Create a temp directory:
@@ -1301,7 +1301,7 @@ sub submit_assignment {
 
   ### Report header:
   my $rep = '';
-  my $reph = "<b>Usu·rio: $uid</b>";
+  my $reph = "<b>Usu√°rio: $uid</b>";
   $reph .= '<br><b>Trabalho: ' .
     "<a href=\"javascript:;\" onclick=\"wrap('stm','$assign');\">$assign</a></b>";
 
@@ -1314,11 +1314,11 @@ sub submit_assignment {
   if ($utype eq 'aluno') {
     if ($dryrun) {
       $reph .= '<br><font color="Teal">O prazo terminou. ' .
-	'Este envio n„o substitui o ˙ltimo envio no prazo.</font>';
+	'Este envio n√£o substitui o √∫ltimo envio no prazo.</font>';
     }
   }
   else {
-    $reph .= "<br>$uid: envios sem restriÁ„o de prazo.";
+    $reph .= "<br>$uid: envios sem restri√ß√£o de prazo.";
   }
   
   $reph .= "<br>Este envio: ${try}&ordm;, " . br_date($now);
@@ -1428,7 +1428,7 @@ sub submit_assignment {
 
     # Compile:
     if ($language ne 'Octave' && $language ne 'Python3') {
-      $rep .= "\n<p><b>CompilaÁ„o:</b>&nbsp;";
+      $rep .= "\n<p><b>Compila√ß√£o:</b>&nbsp;";
     }
     
     # Copy files from directory include if one exists:
@@ -1445,7 +1445,7 @@ sub submit_assignment {
     my $srcname = 'elf';
     
     if ($language eq 'C') {
-      (-x $cfg{gcc}) or abort($uid,$assign,"submit : gcc $cfg{gcc} inv·lido");
+      (-x $cfg{gcc}) or abort($uid,$assign,"submit : gcc $cfg{gcc} inv√°lido");
       (exists($cfg{'gcc-args'})) or ($cfg{'gcc-args'} = '');
       
       open(my $MAKE,'>',"$userd/Makefile") or abort($uid,$assign,"submit : write Makefile : $!");
@@ -1476,8 +1476,8 @@ sub submit_assignment {
     }
     
     elsif ($language eq 'Java') {
-      (-x "$cfg{jdk}/javac") or abort($uid,$assign,"submit : javac $cfg{jdk}/javac inv·lido");
-      (-x "$cfg{jdk}/jar") or abort($uid,$assign,"submit : $cfg{jdk}/jar inv·lido");
+      (-x "$cfg{jdk}/javac") or abort($uid,$assign,"submit : javac $cfg{jdk}/javac inv√°lido");
+      (-x "$cfg{jdk}/jar") or abort($uid,$assign,"submit : $cfg{jdk}/jar inv√°lido");
       (exists($cfg{'javac-args'})) or ($cfg{'javac-args'} = '');
 
       open(my $MF,'>',"$userd/manifest.txt") or	abort($uid,$assign,"submit : write manifest: $!");
@@ -1494,7 +1494,7 @@ sub submit_assignment {
     }
     
     elsif ($language eq 'C++') {
-      (-x $cfg{'g++'}) or abort($uid,$assign,"submit : g++ $cfg{'g++'} inv·lido");
+      (-x $cfg{'g++'}) or abort($uid,$assign,"submit : g++ $cfg{'g++'} inv√°lido");
       (exists($cfg{'g++-args'})) or ($cfg{'g++-args'} = '');
 
       open(my $MAKE,'>',"$userd/Makefile") or abort($uid,$assign,"submit : write Makefile: $!");
@@ -1508,13 +1508,13 @@ sub submit_assignment {
     }
     
     elsif ($language eq 'Fortran') {
-      (-x $cfg{gfortran}) or abort($uid,$assign,"submit : gfortran $cfg{gfortran} inv·lido");
+      (-x $cfg{gfortran}) or abort($uid,$assign,"submit : gfortran $cfg{gfortran} inv√°lido");
       (exists($cfg{'gfortran-args'})) or ($cfg{'gfortran-args'} = '');
       $compcmd = "$cfg{gfortran} $cfg{'gfortran-args'} $sources[0] -o elf";
     }
     
     elsif ($language eq 'Pascal') {
-      (-x $cfg{gpc}) or abort($uid,$assign,"submit : gpc $cfg{gpc} inv·lido");
+      (-x $cfg{gpc}) or abort($uid,$assign,"submit : gpc $cfg{gpc} inv√°lido");
       (exists($cfg{'gpc-args'})) or ($cfg{'gpc-args'} = '');
       $compcmd = "$cfg{gpc} $cfg{'gpc-args'} --executable-file-name=elf --automake $sources[0]";
     }
@@ -1583,7 +1583,7 @@ sub submit_assignment {
       # Dispatch test cases execution:
       else {
 
-	$rep .= "\n<p><b>ExecuÁ„o dos casos-de-teste:</b><p>";
+	$rep .= "\n<p><b>Execu√ß√£o dos casos-de-teste:</b><p>";
 
 	# Per test case limits:
 	my $lim = '';
@@ -1629,9 +1629,9 @@ sub submit_assignment {
 	  my $exec_out = "$userd/$case.run.out";
 	  my $exec_err = "$userd/$case.run.err";
 
-	  (!-r $case_in) and abort($uid,$assign,"submit : sem permiss„o $case_in.");
-	  (-s $exec_st && !-r $exec_st) and abort($uid,$assign,"submit : sem permiss„o $exec_st.");
-	  (!-r $exec_out) and abort($uid,$assign,"submit : sem permiss„o $exec_out.");
+	  (!-r $case_in) and abort($uid,$assign,"submit : sem permiss√£o $case_in.");
+	  (-s $exec_st && !-r $exec_st) and abort($uid,$assign,"submit : sem permiss√£o $exec_st.");
+	  (!-r $exec_out) and abort($uid,$assign,"submit : sem permiss√£o $exec_out.");
 
 	  $failed{$case} = $casei;
 	  my $status;
@@ -1649,18 +1649,18 @@ sub submit_assignment {
 	  $rep .= sprintf("%.02d: &nbsp;",$casei);
 
 	  if ($status == 11) {
-	    $rep .= 'violaÁ„o de memÛria.<br>';
+	    $rep .= 'viola√ß√£o de mem√≥ria.<br>';
 	  }
 	  elsif ($status == 9) {
-	    $rep .= 'limite de tempo ou memÛria excedido.<br>';
+	    $rep .= 'limite de tempo ou mem√≥ria excedido.<br>';
 	  }
 	  elsif ($status == 8) {
 	    $rep .= 'erro de ponto flutuante.<br>';
 	  }
 	  elsif ($status > 0 || -s $exec_err) {
 	    (-s $exec_err && !-r $exec_err) and
-	      abort($uid,$assign,"submit : sem permiss„o $exec_err.");
-	    $rep .= "erro de execuÁ„o ($status).<br>";
+	      abort($uid,$assign,"submit : sem permiss√£o $exec_err.");
+	    $rep .= "erro de execu√ß√£o ($status).<br>";
 	    (-s $exec_err) and ($rep .= '<div class="io">' .
 				load_file($uid,$assign,$exec_err,0,1000) . '</div>');
 	  }
@@ -1669,30 +1669,49 @@ sub submit_assignment {
 	      my $cmd = "$cfg{verifier} $case_in $exec_out >/dev/null 2>&1";
 	      system($cmd);
 	      $status = ($? >> 8) & 0x00FF;
-
 	      if ($status == 0) {
-		$rep .= 'bem sucedido.<br>';
-		$failed{$case} = 0;
-		$passed++;
+          $rep .= 'bem sucedido.<br>';
+          $failed{$case} = 0;
+          $passed++;
 	      }
 	      elsif ($status == 1) {
-		$rep .= 'saÌda incorreta.<br>';
+		      $rep .= 'sa√≠da incorreta.<br>';
 	      }
 	      elsif ($status == 2) {
-		$rep .= 'saÌda com formataÁ„o incorreta.<br>';
+		      $rep .= 'sa√≠da com formata√ß√£o incorreta.<br>';
 	      }
 	      else {
-		abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
+		      abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
 	      }
 	    }
+      elsif(exists($cfg{special-verifier})){
+        my $cmd = "$cfg{special-verifier} $case_in $case_out $exec_out >/dev/null 2>&1";
+	      system($cmd);
+	      $status = ($? >> 8) & 0x00FF;
+
+	      if ($status == 0) {
+          $rep .= 'bem sucedido.<br>';
+          $failed{$case} = 0;
+          $passed++;
+        }
+        elsif ($status == 1) {
+          $rep .= 'saÔøΩda incorreta.<br>';
+        }
+        elsif ($status == 2) {
+          $rep .= 'saÔøΩda com formataÔøΩÔøΩo incorreta.<br>';
+        }
+	      else {
+      		abort($uid,$assign,"submit : Erro ao executar o verificador especial $cmd.");
+	      }
+      }
 	    else {
-	      (!-r $case_out) and abort($uid,$assign,"submit : sem permiss„o $case_out.");
+	      (!-r $case_out) and abort($uid,$assign,"submit : sem permiss√£o $case_out.");
 
 	      system("$cfg{diff} -q $case_out $exec_out >/dev/null 2>&1");
 	      $status = ($? >> 8) & 0x00FF;
 
 	      if ($status == 0) {
-		$rep .= 'saÌda correta.<br>';
+		$rep .= 'sa√≠da correta.<br>';
 		$failed{$case} = 0;
 		$passed++;
 	      }
@@ -1704,10 +1723,10 @@ sub submit_assignment {
 		$status = ($? >> 8) & 0x00FF;
 		
 		if ($status == 0) {
-		  $rep .= 'saÌda com formataÁ„o incorreta.<br>';
+		  $rep .= 'sa√≠da com formata√ß√£o incorreta.<br>';
 		}
 		elsif ($status == 1) {
-		  $rep .= 'saÌda incorreta.<br>';
+		  $rep .= 'sa√≠da incorreta.<br>';
 		}
 		else {
 		  abort($uid,$assign,"submit : erro ao executar diff $case_out.lc $exec_out.lc.");
@@ -1721,7 +1740,7 @@ sub submit_assignment {
 	  $casei++;
 	}
 	
-	$rep .= "<br>N˙mero de casos-de-teste: $ncases." .
+	$rep .= "<br>N√∫mero de casos-de-teste: $ncases." .
 	        "<br>Casos-de-teste bem sucedidos: $passed.";
 
 	my $full_grade ;
@@ -1755,7 +1774,7 @@ sub submit_assignment {
 
 	  for (my $i=0; $i<@show; $i++) {
 	    if ($failed{$show[$i]}) {
-	      $rep .= sprintf("<br><b>ExecuÁ„o do caso %.02d:</b>",$failed{$show[$i]});
+	      $rep .= sprintf("<br><b>Execu√ß√£o do caso %.02d:</b>",$failed{$show[$i]});
 
 	      $rep .= '<p>Entrada:<br><div class="io">';
 	      $rep .= load_file($uid,$assign,"$assign/$show[$i].in",0);
@@ -1763,17 +1782,17 @@ sub submit_assignment {
 	      $rep .= '</div>';
 
 	      if (!exists($cfg{verifier})) {
-		$rep .= '<p>SaÌda esperada:<br><div class="io">';
+		$rep .= '<p>Sa√≠da esperada:<br><div class="io">';
 		$rep .= load_file($uid,$assign,"$assign/$show[$i].out",0);
 		$rep =~ s/\n$/\n\n/;
 		$rep .= '</div>';
 	      }
 
 	      if (-s "$userd/$show[$i].run.out" == 0) {
-		$rep .= '<p>SaÌda produzida: n„o houve<hr>';
+		$rep .= '<p>Sa√≠da produzida: n√£o houve<hr>';
 	      }
 	      else {
-		$rep .= '<p>SaÌda produzida:<br><div class="io">';
+		$rep .= '<p>Sa√≠da produzida:<br><div class="io">';
 		
 		if (-f "$userd/$show[$i].run.out") {
 		  my $size = (-f "$assign/$show[$i].out") ?
@@ -1948,7 +1967,7 @@ sub invoke_moss {
   print_html_start();
 
   # Check user type:
-  ($utype ne 'prof') and block_user($uid,$upassf,"invoke_moss: $uid n„o È prof.");
+  ($utype ne 'prof') and block_user($uid,$upassf,"invoke_moss: $uid n√£o √© prof.");
 
   # Load configs, adjust language:
   (!%sys_cfg) and (%sys_cfg = load_keys_values('sqtpm.cfg'));
@@ -2031,7 +2050,7 @@ sub invoke_moss {
 
     if ($url !~ /^http:/) {
       unlink($runf);
-      abort($uid,$assign,"A execuÁ„o do Moss falhou.");
+      abort($uid,$assign,"A execu√ß√£o do Moss falhou.");
     }
   }
   
@@ -2229,7 +2248,7 @@ sub passf_in_assign {
 
   (-d $assign && -e "$assign/$upassf") and (return 1);
 
-  block_user($uid,$upassf,"check_assign: $upassf n„o est· em $assign.");
+  block_user($uid,$upassf,"check_assign: $upassf n√£o est√° em $assign.");
 }
 
 
