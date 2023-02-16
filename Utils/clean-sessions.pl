@@ -1,18 +1,18 @@
 #!/usr/bin/perl
 
-# Remove expired sqtpm sessions.
-# If no session is left it returns 1, otherwise it returns 0.
-# G.P. Telles, 2015.
+# Remove expired sqtpm session files.
+# If no expired session file is left it returns 0, otherwise it returns 1.
+# G.P. Telles, 2015, 2023.
 
 use File::Find;
-$/;
+$/ = "\n";
 
 use constant SESSION_DIR => '/tmp/';
 
 $left = 0;
 find(\&wanted,SESSION_DIR);
-
 exit($left ? 1 : 0);
+
 
 
 sub wanted {

@@ -1666,44 +1666,27 @@ sub submit_assignment {
 	  }
 	  else {
 	    if (exists($cfg{verifier})) {
-	      my $cmd = "$cfg{verifier} $case_in $exec_out >/dev/null 2>&1";
-	      system($cmd);
-	      $status = ($? >> 8) & 0x00FF;
-	      if ($status == 0) {
-          $rep .= 'bem sucedido.<br>';
-          $failed{$case} = 0;
-          $passed++;
-	      }
-	      elsif ($status == 1) {
-		      $rep .= 'saída incorreta.<br>';
-	      }
-	      elsif ($status == 2) {
-		      $rep .= 'saída com formatação incorreta.<br>';
-	      }
-	      else {
-		      abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
-	      }
-	    }
-      elsif(exists($cfg{special-verifier})){
-        my $cmd = "$cfg{special-verifier} $case_in $case_out $exec_out >/dev/null 2>&1";
+            	my $cmd = exists($cfg{"three-parameters-verifier"}) ? 
+			"$cfg{verifier} $case_in $exec_out $case_out  >/dev/null 2>&1" : 
+			"$cfg{verifier} $case_in $exec_out >/dev/null 2>&1";
 	      system($cmd);
 	      $status = ($? >> 8) & 0x00FF;
 
 	      if ($status == 0) {
-          $rep .= 'bem sucedido.<br>';
-          $failed{$case} = 0;
-          $passed++;
-        }
-        elsif ($status == 1) {
-          $rep .= 'sa�da incorreta.<br>';
-        }
-        elsif ($status == 2) {
-          $rep .= 'sa�da com formata��o incorreta.<br>';
-        }
-	      else {
-      		abort($uid,$assign,"submit : Erro ao executar o verificador especial $cmd.");
+		$rep .= 'bem sucedido.<br>';
+		$failed{$case} = 0;
+		$passed++;
 	      }
-      }
+	      elsif ($status == 1) {
+		$rep .= 'saída incorreta.<br>';
+	      }
+	      elsif ($status == 2) {
+		$rep .= 'saída com formatação incorreta.<br>';
+	      }
+	      else {
+		abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
+	      }
+	    }
 	    else {
 	      (!-r $case_out) and abort($uid,$assign,"submit : sem permissão $case_out.");
 
