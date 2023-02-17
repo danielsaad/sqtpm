@@ -16,9 +16,12 @@ use Fcntl ':flock';
 use File::Basename;
 use File::Find;
 use File::Copy;
-use open ":encoding(Latin1)";
 use MIME::Base64 qw(encode_base64);
 use Time::Local;
+use utf8;
+use open ':encoding(utf8)';
+binmode(STDOUT, ":utf8");
+
 
 use lib dirname(__FILE__);
 use sqtpm;
@@ -151,7 +154,7 @@ exit(0);
 ################################################################################
 sub offline {
 
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title => 'sqtpm', 
 		   -style => {-src=>['sqtpm.css']},
 		   -Cache_Control => 'public',
@@ -169,14 +172,13 @@ sub offline {
 ################################################################################
 sub login_form {
 
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title=>'sqtpm', 
 		   -style=>{-src=>['sqtpm.css']},
 		   -Cache_Control => 'public',
 		   -head=>[Link({-rel=>'icon',-type=>'image/png',-href=>'./icon.png'}),
 			   meta({-name=>'robots',-content=>'noindex'}),
 			   meta({-name=>'googlebot',-content=>'noindex'})]);
-
   print <<END;
 <script type="text/javascript" src="sqtpm.js?61"></script>
 <div class="f85">
@@ -682,7 +684,7 @@ sub show_statement {
 ################################################################################
 sub show_about {
 
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title=>'sqtpm', 
 		   -style=>{-src=>['sqtpm.css']},
 		   -head=>[Link({-rel=>'icon',-type=>'image/png',-href=>'./icon.png'}),
@@ -1671,22 +1673,41 @@ sub submit_assignment {
 			"$cfg{verifier} $case_in $exec_out >/dev/null 2>&1";
 	      system($cmd);
 	      $status = ($? >> 8) & 0x00FF;
-
 	      if ($status == 0) {
-		$rep .= 'bem sucedido.<br>';
-		$failed{$case} = 0;
-		$passed++;
+          $rep .= 'bem sucedido.<br>';
+          $failed{$case} = 0;
+          $passed++;
 	      }
 	      elsif ($status == 1) {
-		$rep .= 'saída incorreta.<br>';
+		$rep .= 'sa?da incorreta.<br>';
 	      }
 	      elsif ($status == 2) {
-		$rep .= 'saída com formatação incorreta.<br>';
+		$rep .= 'sa?da com formata??o incorreta.<br>';
 	      }
 	      else {
-		abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
+		      abort($uid,$assign,"submit : Erro ao executar o verificador $cmd.");
 	      }
 	    }
+      elsif(exists($cfg{special-verifier})){
+        my $cmd = "$cfg{special-verifier} $case_in $case_out $exec_out >/dev/null 2>&1";
+	      system($cmd);
+	      $status = ($? >> 8) & 0x00FF;
+
+	      if ($status == 0) {
+          $rep .= 'bem sucedido.<br>';
+          $failed{$case} = 0;
+          $passed++;
+        }
+        elsif ($status == 1) {
+          $rep .= 'sa�da incorreta.<br>';
+        }
+        elsif ($status == 2) {
+          $rep .= 'sa�da com formata��o incorreta.<br>';
+        }
+	      else {
+      		abort($uid,$assign,"submit : Erro ao executar o verificador especial $cmd.");
+	      }
+      }
 	    else {
 	      (!-r $case_out) and abort($uid,$assign,"submit : sem permissão $case_out.");
 
@@ -2101,10 +2122,10 @@ sub print_html_start {
   (!defined($back)) and ($back = '');
 
   if ($first_login) {
-    print header(-cookie=>$cgi->cookie(CGISESSID => $session->id));
+    print header(-charset=>"UTF-8",-cookie=>$cgi->cookie(CGISESSID => $session->id));
   }
   else {
-    print header();
+    print header(-charset=>"UTF-8");
   }
 
   print start_html(-title=>'sqtpm', 
@@ -2202,7 +2223,7 @@ sub abort_login {
   my $uid = shift;
   my $mess = shift;
   
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title=>'sqtpm', 
 		   -style=>{-src=>['sqtpm.css']},
 		   -head=>[Link({-rel=>'icon',-type=>'image/png',-href=>'icon.png'})]);

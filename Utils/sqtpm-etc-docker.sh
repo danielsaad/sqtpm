@@ -3,7 +3,7 @@
 # Host-side execution dispatcher for Docker.
 # This file is part of sqtpm.
 
-sharedd='/fs/sqtpm'
+sharedd='/data/p2'
 container=2c9cd9906f99
 
 

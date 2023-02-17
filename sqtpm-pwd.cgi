@@ -41,7 +41,7 @@ sub setpasswd {
     return;
   }
 
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title=>'senhas sqtpm', -style=>{-src=>['sqtpm.css']},
 		   -head=>[Link({-rel=>'icon',-type=>'image/png',-href=>'./icon.png'}),
 			   meta({-name=>'robots',-content=>'noindex'}),
@@ -99,7 +99,7 @@ sub setpasswd {
 ################################################################################
 sub passwd_form {
 
-  print header();
+  print header(-charset=>"UTF-8");
   print start_html(-title=>'senhas sqtpm', -style=>{-src=>['sqtpm.css']},
 		   -head=>[Link({-rel=>'icon',-type=>'image/png',-href=>'./icon.png'}),
 			   meta({-name=>'robots',-content=>'noindex'}),
